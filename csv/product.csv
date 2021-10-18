@@ -1,0 +1,19 @@
+Name,Ordered,Sold,Stock,Status
+Sofas,10,5,5,Available
+Tables,30,10,20,Available
+Chairs,20,15,5,Available
+Beds,20,10,10,Available
+Desks,15,5,10,Available
+Mattresses,9,2,7,Available
+Dressers,10,10,0,Not Available
+Ottomans,5,1,4,Available
+Dining Tables,10,10,0,Not Available
+Dining Chairs,10,4,6,Available
+Sectional Sofas,8,8,0,Not Available
+TV Stands,5,4,1, Available
+Bookcases,6,1,5, Available
+Futons,20,7,13, Available
+Bunk Beds,7,5,2,Available
+Coffee Tables,9,9,0,Not Available
+Stools,5,4,1,Available
+Wardrobe,30,30,0,Not Available
