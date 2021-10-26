@@ -1,17 +1,15 @@
-CREATE TABLE product(
-ProductId int,
+CREATE TABLE users(
     Name varchar(100),
-    Purchase varchar(100),
-    Sales varchar(100),
-    Stock varchar(100),
-    Status varchar(100),
-    FOREIGN KEY (ProductId) REFERENCES purchase(Id)
-);
+    Email varchar(100),
+    Password varchar(100));
+
+
+
 
 CREATE TABLE customer(
     Id int PRIMARY KEY AUTO_INCREMENT NOT null,
-    FirstName varchar(100),
-    LastName varchar(100),
+    Name varchar(100),
+    
     Address varchar(100),
     Gender char(10),
     Email varchar(100),
@@ -53,6 +51,37 @@ create table purchase (
 	CompanyId int,
     PRIMARY KEY (Id),
     FOREIGN KEY (CompanyId) REFERENCES company(Id));
+
+
+
+create table purchase (
+    SNO int primary key AUTO_INCREMENT not null,
+    Date date,
+    Name varchar(100),
+    Rate varchar(100),
+    Quantity varchar(100),
+    Amount varchar(100),
+    VAT varchar(100),
+    Discount varchar(100),
+    TotalAmount varchar(100),
+	CompanyId int,
+ProductId int
+    FOREIGN KEY (ProductId) REFERENCES product(Id),
+    FOREIGN KEY (CompanyId) REFERENCES company(Id));
+
+
+
+
+
+CREATE TABLE product(
+ProductId int,
+    Name varchar(100),
+    Purchase varchar(100),
+    Sales varchar(100),
+    Stock varchar(100),
+    Status varchar(100),
+    FOREIGN KEY (ProductId) REFERENCES purchase(Id)
+);
 
 
 

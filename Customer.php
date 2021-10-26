@@ -149,13 +149,13 @@
 
 
 
-
+<!-- 
            <div class="row">
                     <div class="col-xl-6">
                         <div class="card mb-4">
                             <div class="card-header">
                                 <i class="fas fa-chart-area me-1"></i>
-                                Area Chart 
+                                Pie Chart 
                             </div>
                             <div class="card-body"><canvas id="myAreaChart" width="100%" height="40"></canvas></div>
                         </div>
@@ -166,10 +166,40 @@
                                 <i class="fas fa-chart-bar me-1"></i>
                                 Bar Chart 
                             </div>
-                            <div class="card-body"><canvas id="myBarChart" width="100%" height="40"></canvas></div>
+
+                            <?php
+                              include "inc/db_connects.php";
+
+                                  $query = "select  Address, Gender from  customer";
+                                  $result = mysqli_query($con,$query);
+
+                                  if(mysqli_num_rows($result) >= 1) {
+                                      while ($row = mysqli_fetch_assoc($result)) {
+
+                                          $address = $row['Address'];
+                                          $gender = $row['Gender'];
+                                        
+                                      }
+                                  }
+                                      else
+                                      {
+                                      echo "somthing went wrong";
+
+                                      }
+                            ?>
+
+
+                            <div class="card-body"><canvas id="myBarChart" width="100%" height="40"></canvas
+                            <?php
+
+                                echo "<input type='hidden' id= 'jan' value = '$address' >";
+                                echo "<input type='hidden' id= 'feb' value = '$gender' >";
+                                
+                            ?>
+                            ></div>
                         </div>
                     </div>
-                </div> 
+                </div>  -->
           <div class="card mb-4">
             <div class="card-header">
               <i class="fas fa-table me-1"></i>
@@ -180,8 +210,7 @@
                 <thead>
                   <tr>
                     <th scope="col">Id</th>
-                    <th scope="col">First Name</th>
-                    <th scope="col">Last Name</th>
+                    <th scope="col">Name</th>
                     <th scope="col">Address</th>
                     <th scope="col">Gender</th>
                     <th scope="col">Email</th>
@@ -196,16 +225,14 @@
                   while($row = mysqli_fetch_array($run))
                   {
                       $showid = $row[0];
-                      $showfname = $row[1];
-                      $showlname = $row[2];
-                      $showaddress = $row[3];
-                      $showgender = $row[4];
-                      $showemail = $row[5];
-                      $showcontactno = $row[6];
+                      $showname = $row[1];
+                      $showaddress = $row[2];
+                      $showgender = $row[3];
+                      $showemail = $row[4];
+                      $showcontactno = $row[5];
                       echo "<tr align = 'center'>
                               <td>$showid</td>
-                              <td>$showfname</td>
-                              <td>$showlname</td>
+                              <td>$showname</td>
                               <td>$showaddress</td>
                               <td>$showgender</td>
                               <td>$showemail</td>
@@ -247,6 +274,101 @@
         <script src="assets/demo/chart-bar-demo.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
         <script src="js/datatables-simple-demo.js"></script>
+
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"></script>
+
+
+<script>
+    var address = document.getElementById("address").value;
+    var gender = document.getElementById("gender").value;
+   
+
+    window.onload = function()
+    {
+        var randomScalingFactor = function() {
+            return Math.round(Math.random() * 100);
+        };
+        var config = {
+            type: 'bar',
+            data: {
+                borderColor : "#fffff",
+                datasets: [{
+                    data: [
+                        'Male',
+                        'Female',
+                        'Bhaktapur',
+                        'Kathmandu',
+                        'Patan',
+                        'Other'
+                    ],
+                    borderColor : "#fff",
+                    borderWidth : "3",
+                    hoverBorderColor : "#000",
+
+                    label: 'Customer Report',
+
+                    backgroundColor: [
+                        "#0190ff",
+                        "#56d798",
+                        "#ff8397",
+                        "#6970d5",
+                        "#f312cb",
+                        "#ff0060",
+                        "#ffe400"
+
+                    ],
+                    hoverBackgroundColor: [
+                        "#f38b4a",
+                        "#56d798",
+                        "#ff8397",
+                        "#6970d5",
+                        "#ffe400"
+                    ]
+                }],
+
+                labels: [
+                    'Male',
+                    'Female'
+                ]
+            },
+
+            options: {
+                responsive: true
+
+            }
+        };
+        var ctx = document.getElementById('myBarChart').getContext('2d');
+        window.myPie = new Chart(ctx, config);
+
+
+    };
+</script>
+
+
+
+<script>
+  const data = {
+  labels: [
+    'Red',
+    'Blue',
+    'Yellow'
+  ],
+  datasets: [{
+    label: 'My First Dataset',
+    data: [300, 50, 100],
+    backgroundColor: [
+      'rgb(255, 99, 132)',
+      'rgb(54, 162, 235)',
+      'rgb(255, 205, 86)'
+    ],
+    hoverOffset: 4
+  }]
+};
+</script>
 
 
   <!-- Optional JavaScript; choose one of the two! -->

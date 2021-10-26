@@ -179,7 +179,7 @@
               <table id="datatablesSimple">
                 <thead>
                   <tr>
-                    <th scope="col">Id</th>
+                    <th scope="col">S.No.</th>
                     <th scope="col">Date</th>
                     <th scope="col">Name</th>
                     <th scope="col">Rate</th>

@@ -1,3 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Creating Dynamic Data Graph using PHP and Chart.js</title>
+<style type="text/css">
+BODY {
+    width: 550PX;
+}
+
+#chart-container {
+    width: 100%;
+    height: auto;
+}
+</style>
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript" src="js/Chart.min.js"></script>
+
+
+</head>
+<body>
+    <div id="chart-container">
+        <canvas id="graphCanvas"></canvas>
+    </div>
+
+    <script>
+        $(document).ready(function () {
+            showGraph();
+        });
+
+
+        function showGraph()
+        {
+            {
+                $.post("product.php",
+                function (data)
+                {
+                    console.log(data);
+                     var name = [];
+                    var marks = [];
+
+                    for (var i in data) {
+                        name.push(data[i].student_name);
+                        marks.push(data[i].marks);
+                    }
+
+                    var chartdata = {
+                        labels: name,
+                        datasets: [
+                            {
+                                label: 'Student Marks',
+                                backgroundColor: '#49e2ff',
+                                borderColor: '#46d5f1',
+                                hoverBackgroundColor: '#CCCCCC',
+                                hoverBorderColor: '#666666',
+                                data: marks
+                            }
+                        ]
+                    };
+
+                    var graphTarget = $("#graphCanvas");
+
+                    var barGraph = new Chart(graphTarget, {
+                        type: 'bar',
+                        data: chartdata
+                    });
+                });
+            }
+        }
+        </script>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
 <!doctype html>
 <html lang="en">
 
@@ -13,24 +96,22 @@
   <link href="css/style.css" rel="stylesheet" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js"
     crossorigin="anonymous"></script>
-
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.css" rel="stylesheet">
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.css" rel="stylesheet">
   <title>Purchase and Sales Mgmt System</title>
   <style>
-    th {
+    th{
       border: 2px solid #e6e6e6;
       text-align: center;
     }
-
-    tr {
+    tr{
       border: 2px solid #e6e6e6;
     }
-
-    td {
+    td{
       border: 2px solid #e6e6e6;
     }
   </style>
+  
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript" src="js/Chart.min.js"></script>
 </head>
 
 <body class="sb-nav-fixed">
@@ -87,8 +168,8 @@
             </a>
             <div class="sb-sidenav-menu-heading">Interface</div>
 
-            <a class="nav-link collapsed" href="Product.php" data-bs-toggle="collapse" data-bs-target="#collapseLayouts"
-              aria-expanded="false" aria-controls="collapseLayouts">
+            <a class="nav-link collapsed" href="Product.php" data-bs-toggle="collapse"
+              data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
               <div class="sb-nav-link-icon"><i class="fab fa-product-hunt"></i></div>
               Product
               <!-- <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div> -->
@@ -138,7 +219,7 @@
         </div>
         <div class="sb-sidenav-footer">
           <div class="small">Logged in as:</div>
-          Admin
+         Admin
         </div>
       </nav>
     </div>
@@ -147,8 +228,9 @@
     <div id="layoutSidenav_content">
       <main>
         <div class="container-fluid px-4">
-          <h1 class="mt-4">Sales Report</h1>
+          <h1 class="mt-4">Product Detail</h1>
           <ol class="breadcrumb mb-4">
+
           </ol>
 
 
@@ -166,109 +248,83 @@
               </div>
             </div>
 
-
             <div class="col-xl-6">
               <div class="card mb-4">
                 <div class="card-header">
                   <i class="fas fa-chart-bar me-1"></i>
                   Bar Chart
                 </div>
+                <div class="card-body">
+                  <canvas id="myBarChart" width="100%" height="40">
+                    <script>
+                      <?php
+                          header('Content-Type: application/json');
 
+                         // require_once('db.php');
 
+                          $sqlQuery = "SELECT Purchase,Sales FROM product ORDER BY ProductId";
 
+                          $result = mysqli_query($conn,$sqlQuery);
 
-                <?php
+                          $data = array();
+                          foreach ($result as $row) {
+                            $data[] = $row;
+                          }
 
-include("inc/db_connects.php");
+                          mysqli_close($conn);
 
-$query = "select Name,Quantity from  sales";
-$result = mysqli_query($con,$query);
+                          echo json_encode($data);
+                      ?>
+                    </script>
 
-if(mysqli_num_rows($result) >= 1) {
-    while ($row = mysqli_fetch_assoc($result)) {
-
-        $name = $row['Name'];
-        $qty = $row['Quantity'];
-        
-    }
-}
-    else
-    {
-    echo "somthing went wrong";
-
-    }
-?>
-
-
-
-
-                <div class="card-body"><canvas id="myBarChart" width="100%" height="40"></canvas>
-                  <?php
-
-                                echo "<input type='hidden' id= 'name' value = '$name' >";
-                                echo "<input type='hidden' id= 'qty' value = '$qty' >";
-                               
-
-                            ?>
-                </div>
+                  </canvas></div>
               </div>
             </div>
           </div>
+
+
+
+
+
+
           <div class="card mb-4">
             <div class="card-header">
               <i class="fas fa-table me-1"></i>
-              Sales Data
+              Product Data
             </div>
             <div class="card-body">
               <table id="datatablesSimple">
                 <thead>
                   <tr>
-                    <th scope="col">S.No.</th>
-                    <th scope="col">Date</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Rate</th>
-                    <th scope="col">Quantity</th>
-                    <th scope="col">Amount</th>
-                    <th scope="col">VAT(%)</th>
-                    <th scope="col">Discount(%)</th>
-                    <th scope="col">Total Amount</th>
-                    <th scope="col">Customer</th>
-                    <th scope="col">Product Id</th>
+                    <th scope="col">Id</th>
+                    <th scope="col">Product_Name</th>
+                    <th scope="col">Purchase_Unit</th>
+                    <th scope="col">Sales_Unit</th>
+                    <th scope="col">Available</th>
+                    <th scope="col">Status</th>
                   </tr>
-
-
                 </thead>
 
                 <tbody>
                   <?php
                   include "inc/db_connects.php";
-                  $run = mysqli_query($con,"select *from sales");
+                  $run = mysqli_query($con,"select *from product");
                   while($row = mysqli_fetch_array($run))
                   {
                       $showid = $row[0];
-                      $showdate = $row[1];
-                      $showname = $row[2];
-                      $showrate = $row[3];
-                      $showqty = $row[4];
-                      $showamt = $row[5];
-                      $showvat = $row[6];
-                      $showdis = $row[7];
-                      $showtotal = $row[8];
-                      $showcompany = $row[9];
-                      $showproductid = $row[11];
+                      $showname = $row[1];
+                      $showpurchase = $row[2];
+                      $showsales = $row[3];
+                      $showstock = $row[4];
+                      $showstatus = $row[5];
                       echo "<tr align = 'center'>
                               <td>$showid</td>
-                              <td>$showdate</td>
                               <td>$showname</td>
-                              <td>$showrate</td>
-                              <td>$showqty</td>
-                              <td>$showamt</td>
-                              <td>$showvat</td>
-                              <td>$showdis</td>
-                              <td>$showtotal</td>
-                              <td>$showcompany</td>
-                              <td>$showproductid</td>
-                            </tr>";
+                              <td>$showpurchase</td>
+                              <td>$showsales</td>
+                              <td>$showstock</td>
+                              <td>$showstatus</td>
+                          </tr>";
                   }
               ?>
                 </tbody>
@@ -306,76 +362,51 @@ if(mysqli_num_rows($result) >= 1) {
   <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
   <script src="js/datatables-simple-demo.js"></script>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"></script>
-
-
   <script>
-    var name = document.getElementById("name").value;
-    var qty = document.getElementById("qty").value;
-    
-    window.onload = function () {
-      var randomScalingFactor = function () {
-        return Math.round(Math.random() * 100);
-      };
-      var config = {
-        type: 'bar',
-        data: {
-          borderColor: "#fffff",
-          datasets: [{
-            data: [
-              name,
-              qty
-            ],
-            borderColor: "#fff",
-            borderWidth: "3",
-            hoverBorderColor: "#000",
+        $(document).ready(function () {
+            showGraph();
+        });
 
-            label: 'Sales Report',
 
-            backgroundColor: [
-              "#0190ff",
-              "#56d798",
-              "#ff8397",
-              "#6970d5",
-              "#f312cb",
-              "#ff0060",
-              "#ffe400"
+        function showGraph()
+        {
+            {
+                $.post("product.php",
+                function (data)
+                {
+                    console.log(data);
+                     var purchase = [];
+                    var sales = [];
 
-            ],
-            hoverBackgroundColor: [
-              "#f38b4a",
-              "#56d798",
-              "#ff8397",
-              "#6970d5",
-              "#ffe400"
-            ]
-          }],
+                    for (var i in data) {
+                        purchase.push(data[i].purchase);
+                        sales.push(data[i].sales);
+                    }
 
-          labels: [
-            'Coffee Table',
-            'Dinning Table',
-            'Work Table',
-            'Side Table',
-            'Conference Table'
-          ]
-        },
+                    var chartdata = {
+                        labels: purchase,
+                        datasets: [
+                            {
+                                label: 'Product',
+                                backgroundColor: '#49e2ff',
+                                borderColor: '#46d5f1',
+                                hoverBackgroundColor: '#CCCCCC',
+                                hoverBorderColor: '#666666',
+                                data: marks
+                            }
+                        ]
+                    };
 
-        options: {
-          responsive: true
+                    var graphTarget = $("#myBarChart");
 
+                    var barGraph = new Chart(graphTarget, {
+                        type: 'bar',
+                        data: chartdata
+                    });
+                });
+            }
         }
-      };
-      var ctx = document.getElementById('myBarChart').getContext('2d');
-      window.myPie = new Chart(ctx, config);
-
-
-    };
-  </script>
-
-
+        </script>
 
   <!-- Optional JavaScript; choose one of the two! -->
 

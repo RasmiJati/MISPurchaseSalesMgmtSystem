@@ -11,6 +11,9 @@
     integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
   <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
   <link href="css/style.css" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.css" rel="stylesheet">
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js"
     crossorigin="anonymous"></script>
   <title>Purchase and Sales Mgmt System</title>
@@ -167,7 +170,34 @@
                   <i class="fas fa-chart-bar me-1"></i>
                   Bar Chart
                 </div>
-                <div class="card-body"><canvas id="myBarChart" width="100%" height="40"></canvas></div>
+                <?php
+
+include("inc/db_connects.php");
+
+$query = "select Purchase,Sales from  Product";
+$result = mysqli_query($con,$query);
+
+if(mysqli_num_rows($result) >= 1) {
+    while ($row = mysqli_fetch_assoc($result)) {
+
+        $purchase = $row['Purchase'];
+        $sales = $row['Sales'];
+    }
+}
+    else
+    {
+    echo "somthing went wrong";
+
+    }
+?>
+                <div class="card-body"><canvas id="myChart" width="100%" height="40"></canvas>
+                <?php
+
+echo "<input type='hidden' id= 'purchase' value = '$purchase' >";
+echo "<input type='hidden' id= 'sales' value = '$sales' >";
+
+?>
+              </div>
               </div>
             </div>
           </div>
@@ -192,7 +222,7 @@
                 <tbody>
                   <?php
                   include "inc/db_connects.php";
-                  $run = mysqli_query($con,"select *from product");
+                  $run = mysqli_query($con,"select *from purchase");
                   while($row = mysqli_fetch_array($run))
                   {
                       $showid = $row[0];
@@ -245,7 +275,70 @@
   <script src="assets/demo/chart-bar-demo.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
   <script src="js/datatables-simple-demo.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"></script>
+<script>
+    var purchase = document.getElementById("purchase").value;
+    var sales = document.getElementById("sales").value;
+   
+    window.onload = function()
+    {
+        var randomScalingFactor = function() {
+            return Math.round(Math.random() * 100);
+        };
+        var config = {
+            type: 'bar',
+            data: {
+                borderColor : "#fffff",
+                datasets: [{
+                    data: [
+                        Purchase,
+                        Sales
+                    ],
+                    borderColor : "#fff",
+                    borderWidth : "3",
+                    hoverBorderColor : "#000",
 
+                    label: 'Purchase and Sales Report',
+
+                    backgroundColor: [
+                        "#0190ff",
+                        "#56d798",
+                        "#ff8397",
+                        "#6970d5",
+                        "#f312cb",
+                        "#ff0060",
+                        "#ffe400"
+
+                    ],
+                    hoverBackgroundColor: [
+                        "#f38b4a",
+                        "#56d798",
+                        "#ff8397",
+                        "#6970d5",
+                        "#ffe400"
+                    ]
+                }],
+
+                labels: [
+                    'Purchase',
+                    'Sales'
+                ]
+            },
+
+            options: {
+                responsive: true
+
+            }
+        };
+        var ctx = document.getElementById('myChart').getContext('2d');
+        window.myPie = new Chart(ctx, config);
+
+
+    };
+</script>
 
   <!-- Optional JavaScript; choose one of the two! -->
 
