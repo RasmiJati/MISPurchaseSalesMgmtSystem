@@ -1,3 +1,6 @@
+<?php
+  include "inc/db_connects.php";
+?>
 <!doctype html>
 <html lang="en">
 
@@ -9,10 +12,11 @@
   <!-- Bootstrap CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
-    <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
-    <link href="css/style.css" rel="stylesheet" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
+  <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
+  <link href="css/style.css" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
   <title>Purchase and Sales Mgmt System</title>
+
   <style>
     th{
       border: 2px solid #e6e6e6;
@@ -30,12 +34,15 @@
 <body class="sb-nav-fixed">
 
   <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+
     <!-- Navbar Brand-->
     <a class="navbar-brand ps-3" href="index.php">PurchaseSalesMgmt</a>
+    
     <!-- Sidebar Toggle-->
     <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i
         class="fas fa-bars"></i></button>
-    <!-- Navbar Search-->
+    
+        <!-- Navbar Search-->
     <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
       <div class="input-group">
         <input class="form-control" type="text" placeholder="Search for..." aria-label="Search for..."
@@ -65,34 +72,44 @@
         </ul>
       </li>
     </ul> -->
+
   </nav>
 
 
 
   <div id="layoutSidenav">
+
+
+    <!-- side nav -->
     <div id="layoutSidenav_nav">
+    
       <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
         <div class="sb-sidenav-menu">
           <div class="nav">
+          
             <div class="sb-sidenav-menu-heading">Core</div>
+
             <a class="nav-link" href="index.php">
               <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-              Dashboard
+                Dashboard
             </a>
+            
+            
             <div class="sb-sidenav-menu-heading">Interface</div>
             
-            <a class="nav-link collapsed" href="Product.php" data-bs-toggle="collapse" data-bs-target="#collapseLayouts"
+            <!-- <a class="nav-link collapsed" href="Product.php" data-bs-toggle="collapse" data-bs-target="#collapseLayouts"
               aria-expanded="false" aria-controls="collapseLayouts">
               <div class="sb-nav-link-icon"><i class="fab fa-product-hunt"></i></div>
               Product
-              <!-- <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div> -->
-            </a>
+              <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div> 
+            </a> -->
             <!-- <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
               <nav class="sb-sidenav-menu-nested nav">
                 <a class="nav-link" href="layout-static.html">Static Navigation</a>
                 <a class="nav-link" href="layout-sidenav-light.html">Light Sidenav</a>
               </nav>
             </div> -->
+
             <a class="nav-link collapsed" href="Purchase.php" data-bs-toggle="collapse" data-bs-target="#collapsePages"
               aria-expanded="false" aria-controls="collapsePages">
               <div class="sb-nav-link-icon"><i class="fas fa-truck-loading"></i></div>  
@@ -100,39 +117,36 @@
             </a>
 
             <a class="nav-link collapsed" href="Sales.php" data-bs-toggle="collapse" data-bs-target="#collapsePages"
-            aria-expanded="false" aria-controls="collapsePages">
-            <div class="sb-nav-link-icon"><i class="fas fa-shopping-bag"></i></div>  
-            Sales
-          </a>
-          <a class="nav-link collapsed" href="Company.php" data-bs-toggle="collapse" data-bs-target="#collapsePages"
-          aria-expanded="false" aria-controls="collapsePages">
-          <div class="sb-nav-link-icon"><i class="fas fa-warehouse"></i></div>  
-         Company
-        </a>
-        <a class="nav-link collapsed" href="Customer.php" data-bs-toggle="collapse" data-bs-target="#collapsePages"
-        aria-expanded="false" aria-controls="collapsePages">
-        <div class="sb-nav-link-icon"><i class="fas fa-user-friends"></i></div>  
-        Customer
-      </a>
-      <a class="nav-link collapsed" href="Profit.php" data-bs-toggle="collapse" data-bs-target="#collapsePages"
-      aria-expanded="false" aria-controls="collapsePages">
-      <div class="sb-nav-link-icon"><i class="fas fa-chart-line"></i></div>  
-      Profit
-    </a>
-            <div class="sb-sidenav-menu-heading"></div>
-            <!-- <a class="nav-link" href="charts.html">
-              <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
-              Charts
+              aria-expanded="false" aria-controls="collapsePages">
+              <div class="sb-nav-link-icon"><i class="fas fa-shopping-bag"></i></div>  
+              Sales
             </a>
-            <a class="nav-link" href="tables.html">
-              <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
-              Tables
-            </a> -->
+
+
+            <a class="nav-link collapsed" href="Company.php" data-bs-toggle="collapse" data-bs-target="#collapsePages"
+              aria-expanded="false" aria-controls="collapsePages">
+              <div class="sb-nav-link-icon"><i class="fas fa-warehouse"></i></div>  
+              Company
+            </a>
+
+
+            <a class="nav-link collapsed" href="Customer.php" data-bs-toggle="collapse" data-bs-target="#collapsePages"
+              aria-expanded="false" aria-controls="collapsePages">
+              <div class="sb-nav-link-icon"><i class="fas fa-user-friends"></i></div>  
+              Customer
+            </a>
+
+
+            <a class="nav-link collapsed" href="Profit.php" data-bs-toggle="collapse" data-bs-target="#collapsePages"
+              aria-expanded="false" aria-controls="collapsePages">
+              <div class="sb-nav-link-icon"><i class="fas fa-chart-line"></i></div>  
+              Profit
+            </a>
+
+
+            <div class="sb-sidenav-menu-heading"></div>
+            
           </div>
-        </div>
-        <div class="sb-sidenav-footer">
-          <div class="small">Logged in as:</div>
-         Admin
         </div>
       </nav>
     </div>
@@ -141,65 +155,54 @@
     <div id="layoutSidenav_content">
       <main>
         <div class="container-fluid px-4">
+
           <h1 class="mt-4">Customer Detail</h1>
-          <ol class="breadcrumb mb-4">
-            
-          </ol>
+          <ol class="breadcrumb mb-4"> </ol>
         
+          <!-- Row 2 -->
+          <div class="row">
+
+            <div class="col-xl-6">
+              <div class="card mb-4">
+
+              <!-- card header pie chart -->
+                <div class="card-header">
+                  <i class="fas fa-chart-area me-1"></i>
+                    Pie Chart 
+                </div>
+          
+
+                      <!-- card body piechart -->
+                <div class="card-body"><div id="piechart" style="width: 500px; height: 400px;"></div></div>
+          
+              </div>
+          
+            </div>
+          
 
 
+            <div class="col-xl-6">
+              <div class="card mb-4">
 
-<!-- 
-           <div class="row">
-                    <div class="col-xl-6">
-                        <div class="card mb-4">
-                            <div class="card-header">
-                                <i class="fas fa-chart-area me-1"></i>
-                                Pie Chart 
-                            </div>
-                            <div class="card-body"><canvas id="myAreaChart" width="100%" height="40"></canvas></div>
-                        </div>
-                    </div>
-                    <div class="col-xl-6">
-                        <div class="card mb-4">
-                            <div class="card-header">
-                                <i class="fas fa-chart-bar me-1"></i>
-                                Bar Chart 
-                            </div>
+                <!-- card header bar -->
+                <div class="card-header">
+                  <i class="fas fa-chart-bar me-1"></i>
+                       Bar Chart 
+                </div>
+              
+                <!-- card body bar -->
+                <div class="card-body">
+                  <div id="columnchart_material" style="width: 500px; height: 400px;"></div>  
+                
+                </div>
 
-                            <?php
-                              include "inc/db_connects.php";
+              </div>
 
-                                  $query = "select  Address, Gender from  customer";
-                                  $result = mysqli_query($con,$query);
-
-                                  if(mysqli_num_rows($result) >= 1) {
-                                      while ($row = mysqli_fetch_assoc($result)) {
-
-                                          $address = $row['Address'];
-                                          $gender = $row['Gender'];
-                                        
-                                      }
-                                  }
-                                      else
-                                      {
-                                      echo "somthing went wrong";
-
-                                      }
-                            ?>
+            </div>
 
 
-                            <div class="card-body"><canvas id="myBarChart" width="100%" height="40"></canvas
-                            <?php
-
-                                echo "<input type='hidden' id= 'jan' value = '$address' >";
-                                echo "<input type='hidden' id= 'feb' value = '$gender' >";
-                                
-                            ?>
-                            ></div>
-                        </div>
-                    </div>
-                </div>  -->
+            
+                
           <div class="card mb-4">
             <div class="card-header">
               <i class="fas fa-table me-1"></i>
@@ -220,7 +223,7 @@
                 
                 <tbody>
                   <?php
-                  include "inc/db_connects.php";
+                  // include "inc/db_connects.php";
                   $run = mysqli_query($con,"select *from customer");
                   while($row = mysqli_fetch_array($run))
                   {
@@ -277,12 +280,12 @@
 
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"></script>
+  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"></script> -->
 
 
-<script>
+<!-- <script>
     var address = document.getElementById("address").value;
     var gender = document.getElementById("gender").value;
    
@@ -368,7 +371,72 @@
     hoverOffset: 4
   }]
 };
-</script>
+</script> -->
+
+
+<?php
+  $query = "Select Gender, count(*) as number from customer group by Gender";
+  $result = mysqli_query($con, $query);
+?>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChart);
+
+      function drawChart() {
+
+        var data = google.visualization.arrayToDataTable([
+          ['Gender', 'Number'],
+          <?php
+            while($row = mysqli_fetch_array($result)){
+              echo "['".$row["Gender"]."', ".$row["number"],"],";
+            }
+          ?>
+        ]);
+
+        var options = {
+          title: 'Percentage of Male and Female customer'
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+
+        chart.draw(data, options);
+      }
+    </script>
+
+
+
+
+<?php
+  $query = "Select Address, count(*) as number from customer group by Address";
+  $result = mysqli_query($con, $query);
+?>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+      google.charts.load('current', {'packages':['bar']});
+      google.charts.setOnLoadCallback(drawChart);
+
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+          ['Address', 'Number'],
+          <?php
+            while($row = mysqli_fetch_array($result)){
+              echo "['".$row["Address"]."', ".$row["number"],"],";
+            }
+          ?>
+        ]);
+
+        var options = {
+          chart: {
+            title: 'Customers Address',
+          }
+        };
+
+        var chart = new google.charts.Bar(document.getElementById('columnchart_material'));
+
+        chart.draw(data, google.charts.Bar.convertOptions(options));
+      }
+    </script>
 
 
   <!-- Optional JavaScript; choose one of the two! -->

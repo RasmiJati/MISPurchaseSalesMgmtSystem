@@ -109,12 +109,12 @@
             <div class="sb-sidenav-menu-heading">Interface</div>
             
             <!-- Product.php -->
-            <a class="nav-link collapsed" href="Product.php" data-bs-toggle="collapse" data-bs-target="#collapseLayouts"
+            <!-- <a class="nav-link collapsed" href="Product.php" data-bs-toggle="collapse" data-bs-target="#collapseLayouts"
               aria-expanded="false" aria-controls="collapseLayouts">
               <div class="sb-nav-link-icon"><i class="fab fa-product-hunt"></i></div>
               Product
-              <!-- <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div> -->
-            </a>
+               <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+            </a> -->
 
 
             <!-- <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
@@ -201,7 +201,7 @@
           </ol>
           
 
-          <!-- Row 1 -->
+          <!-- Row 1 card box-->
           <div class="row">
 
             <!-- Profit.php -->
@@ -253,7 +253,7 @@
 
 
 
-          <!-- Row 2  -->
+          <!-- Row 2 chart  -->
           <div class="row">
              
             <!-- Col 1 Area Chart -->
@@ -300,7 +300,7 @@
 
 
 
-            <!-- Row 3 -->
+            <!-- Row 3 table -->
         
 
         </div>

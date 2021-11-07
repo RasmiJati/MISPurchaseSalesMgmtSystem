@@ -1,3 +1,6 @@
+<?php
+  include "inc/db_connects.php";
+?>
 <!doctype html>
 <html lang="en">
 
@@ -81,12 +84,12 @@
             </a>
             <div class="sb-sidenav-menu-heading">Interface</div>
             
-            <a class="nav-link collapsed" href="Product.php" data-bs-toggle="collapse" data-bs-target="#collapseLayouts"
+            <!-- <a class="nav-link collapsed" href="Product.php" data-bs-toggle="collapse" data-bs-target="#collapseLayouts"
               aria-expanded="false" aria-controls="collapseLayouts">
               <div class="sb-nav-link-icon"><i class="fab fa-product-hunt"></i></div>
               Product
-              <!-- <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div> -->
-            </a>
+               <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div> 
+            </a> -->
             <!-- <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
               <nav class="sb-sidenav-menu-nested nav">
                 <a class="nav-link" href="layout-static.html">Static Navigation</a>
@@ -119,21 +122,26 @@
       <div class="sb-nav-link-icon"><i class="fas fa-chart-line"></i></div>  
       Profit
     </a>
-            <div class="sb-sidenav-menu-heading"></div>
-            <!-- <a class="nav-link" href="charts.html">
-              <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
-              Charts
-            </a>
-            <a class="nav-link" href="tables.html">
-              <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
-              Tables
-            </a> -->
+    <div class="sb-sidenav-menu-heading">Report</div>
+              <a class="nav-link" href="charts.html">
+                <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
+                Daily
+              </a>
+              <a class="nav-link" href="tables.html">
+                <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
+                Weekly
+              </a>
+              <a class="nav-link" href="charts.html">
+                <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
+                Monthly
+              </a>
+              <a class="nav-link" href="tables.html">
+                <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
+                Yearly
+              </a>
           </div>
         </div>
-        <div class="sb-sidenav-footer">
-          <div class="small">Logged in as:</div>
-          Admin
-        </div>
+       
       </nav>
     </div>
 
@@ -161,14 +169,24 @@
                         </div>
                     </div>
                     <div class="col-xl-6">
-                        <div class="card mb-4">
-                            <div class="card-header">
-                                <i class="fas fa-chart-bar me-1"></i>
-                                Bar Chart 
-                            </div>
-                            <div class="card-body"><canvas id="myBarChart" width="100%" height="40"></canvas></div>
-                        </div>
-                    </div>
+              <div class="card mb-4">
+
+                <!-- card header bar -->
+                <div class="card-header">
+                  <i class="fas fa-chart-bar me-1"></i>
+                       Bar Chart 
+                </div>
+              
+                <!-- card body bar -->
+                <div class="card-body">
+                  <div id="columnchart_material" style="width: 600px; height: 400px;"></div>  
+                
+                </div>
+
+              </div>
+
+            </div>
+
                 </div> 
           <div class="card mb-4">
             <div class="card-header">
@@ -195,7 +213,7 @@
                 
                 <tbody>
                   <?php
-                  include "inc/db_connects.php";
+                  // include "inc/db_connects.php";
                   $run = mysqli_query($con,"select *from purchase");
                   while($row = mysqli_fetch_array($run))
                   {
@@ -257,6 +275,37 @@
         <script src="assets/demo/chart-bar-demo.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
         <script src="js/datatables-simple-demo.js"></script>
+
+
+        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+      google.charts.load('current', {'packages':['bar']});
+      google.charts.setOnLoadCallback(drawChart);
+
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+          ['Name', 'Quantity'],
+          <?php
+            $query = "Select Name, Quantity from purchase group by Name";
+          $result = mysqli_query($con, $query);      
+            while($row = mysqli_fetch_array($result)){
+              echo "['".$row["Name"]."', ".$row["Quantity"],"],";
+            }
+          ?>
+        ]);
+
+        var options = {
+          chart: {
+            title: 'Total Sales',
+          }
+        };
+
+        var chart = new google.charts.Bar(document.getElementById('columnchart_material'));
+
+        chart.draw(data, google.charts.Bar.convertOptions(options));
+      }
+    </script>
+
 
 
   <!-- Optional JavaScript; choose one of the two! -->

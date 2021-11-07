@@ -1,3 +1,6 @@
+<?php
+  include "inc/db_connects.php";
+?>
 <!doctype html>
 <html lang="en">
 
@@ -49,22 +52,7 @@
           <a class="nav-link px-3" href="login.html">Log out</a>
       </div>
   </div>
-
-    <!-- Navbar-->
-    <!-- <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown"
-          aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
-        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-          <li><a class="dropdown-item" href="#!">Settings</a></li>
-          <li><a class="dropdown-item" href="#!">Activity Log</a></li>
-          <li>
-            <hr class="dropdown-divider" />
-          </li>
-          <li><a class="dropdown-item" href="#!">Logout</a></li>
-        </ul>
-      </li>
-    </ul> -->
+    
   </nav>
 
 
@@ -81,18 +69,19 @@
             </a>
             <div class="sb-sidenav-menu-heading">Interface</div>
             
-            <a class="nav-link collapsed" href="Product.php" data-bs-toggle="collapse" data-bs-target="#collapseLayouts"
+            <!-- <a class="nav-link collapsed" href="Product.php" data-bs-toggle="collapse" data-bs-target="#collapseLayouts"
               aria-expanded="false" aria-controls="collapseLayouts">
               <div class="sb-nav-link-icon"><i class="fab fa-product-hunt"></i></div>
               Product
-              <!-- <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div> -->
-            </a>
+              <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div> 
+            </a> -->
             <!-- <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
               <nav class="sb-sidenav-menu-nested nav">
                 <a class="nav-link" href="layout-static.html">Static Navigation</a>
                 <a class="nav-link" href="layout-sidenav-light.html">Light Sidenav</a>
               </nav>
             </div> -->
+
             <a class="nav-link collapsed" href="Purchase.php" data-bs-toggle="collapse" data-bs-target="#collapsePages"
               aria-expanded="false" aria-controls="collapsePages">
               <div class="sb-nav-link-icon"><i class="fas fa-truck-loading"></i></div>  
@@ -121,20 +110,12 @@
     </a>
 
             <div class="sb-sidenav-menu-heading"></div>
-            <!-- <a class="nav-link" href="charts.html">
-              <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
-              Charts
-            </a>
-            <a class="nav-link" href="tables.html">
-              <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
-              Tables
-            </a> -->
           </div>
         </div>
-        <div class="sb-sidenav-footer">
+        <!-- <div class="sb-sidenav-footer">
           <div class="small">Logged in as:</div>
           Admin
-        </div>
+        </div> -->
       </nav>
     </div>
 
@@ -152,24 +133,24 @@
 
 
            <div class="row">
-                    <!-- <div class="col-xl-6">
-                        <div class="card mb-4">
-                            <div class="card-header">
-                                <i class="fas fa-chart-area me-1"></i>
-                                Area Chart 
-                            </div>
-                            <div class="card-body"><canvas id="myAreaChart" width="100%" height="40"></canvas></div>
-                        </div>
-                    </div>
-                    <div class="col-xl-6">
-                        <div class="card mb-4">
-                            <div class="card-header">
-                                <i class="fas fa-chart-bar me-1"></i>
-                                Bar Chart 
-                            </div>
-                            <div class="card-body"><canvas id="myBarChart" width="100%" height="40"></canvas></div>
-                        </div>
-                    </div> -->
+           <div class="col-xl-6">
+              <div class="card mb-4">
+
+              <!-- card header pie chart -->
+                <div class="card-header">
+                  <i class="fas fa-chart-area me-1"></i>
+                    Pie Chart 
+                </div>
+          
+
+                      <!-- card body piechart -->
+                <div class="card-body"><div id="piechart" style="width: 500px; height: 300px;"></div></div>
+          
+              </div>
+          
+            </div>
+          
+                 
             </div> 
 
 
@@ -195,7 +176,7 @@
                 
                 <tbody>
                   <?php
-                  include "inc/db_connects.php";
+                  // include "inc/db_connects.php";
                   $run = mysqli_query($con,"select *from company");
                   while($row = mysqli_fetch_array($run))
                   {
@@ -249,6 +230,40 @@
         <script src="assets/demo/chart-bar-demo.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
         <script src="js/datatables-simple-demo.js"></script>
+
+        
+<?php
+  $query = "Select Address, count(*) as number from company group by Address";
+  $result = mysqli_query($con, $query);
+?>
+        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    
+    <script type="text/javascript">
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChart);
+
+      function drawChart() {
+
+        var data = google.visualization.arrayToDataTable([
+          ['Address', 'Number'],
+          <?php
+            while($row = mysqli_fetch_array($result)){
+              echo "['".$row["Address"]."', ".$row["number"],"],";
+            }
+          ?>
+        ]);
+
+        var options = {
+          title: 'Company Address in Percentage'
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+
+        chart.draw(data, options);
+      }
+    </script>
+
+
 
 
   <!-- Optional JavaScript; choose one of the two! -->

@@ -123,15 +123,23 @@
               <div class="sb-nav-link-icon"><i class="fas fa-chart-line"></i></div>
               Profit
             </a>
-            <div class="sb-sidenav-menu-heading"></div>
-            <!-- <a class="nav-link" href="charts.html">
-              <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
-              Charts
-            </a>
-            <a class="nav-link" href="tables.html">
-              <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
-              Tables
-            </a> -->
+            <div class="sb-sidenav-menu-heading">Report</div>
+              <a class="nav-link" href="charts.html">
+                <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
+                Daily
+              </a>
+              <a class="nav-link" href="tables.html">
+                <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
+                Weekly
+              </a>
+              <a class="nav-link" href="charts.html">
+                <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
+                Monthly
+              </a>
+              <a class="nav-link" href="tables.html">
+                <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
+                Yearly
+              </a>
           </div>
         </div>
         <div class="sb-sidenav-footer">
@@ -153,54 +161,50 @@
 
 
 
-
           <div class="row">
-            <div class="col-xl-6">
-              <div class="card mb-4">
-                <div class="card-header">
-                  <i class="fas fa-chart-area me-1"></i>
-                  Area Chart
-                </div>
-                <div class="card-body"><canvas id="myAreaChart" width="100%" height="40"></canvas></div>
-              </div>
-            </div>
-            <div class="col-xl-6">
-              <div class="card mb-4">
-                <div class="card-header">
-                  <i class="fas fa-chart-bar me-1"></i>
-                  Bar Chart
-                </div>
-                <?php
-
-include("inc/db_connects.php");
-
-$query = "select Purchase,Sales from  Product";
-$result = mysqli_query($con,$query);
-
-if(mysqli_num_rows($result) >= 1) {
-    while ($row = mysqli_fetch_assoc($result)) {
-
-        $purchase = $row['Purchase'];
-        $sales = $row['Sales'];
-    }
-}
-    else
-    {
-    echo "somthing went wrong";
-
-    }
-?>
-                <div class="card-body"><canvas id="myChart" width="100%" height="40"></canvas>
-                <?php
-
-echo "<input type='hidden' id= 'purchase' value = '$purchase' >";
-echo "<input type='hidden' id= 'sales' value = '$sales' >";
-
-?>
-              </div>
-              </div>
-            </div>
-          </div>
+             
+             <!-- Col 1 Area Chart -->
+             <div class="col-xl-6">
+ 
+               <div class="card mb-4">
+ 
+                 <!-- card header -->
+                 <div class="card-header">
+                   <i class="fas fa-chart-area me-1"></i>
+                       Area Chart 
+                 </div>
+                 
+                 <!-- card body -->
+                 <div class="card-body">
+                   <div id="chart_div" style="width: 500px; height: 400px;"></div>  
+                   <!-- <canvas id="myAreaChart" width="100%" height="40"></canvas> -->
+                 </div>
+ 
+               </div>
+             </div>
+ 
+             <!-- col 2 Bar chart -->
+             <div class="col-xl-6">
+               <div class="card mb-4">
+ 
+                 <!-- card header -->
+                 <div class="card-header">
+                   <i class="fas fa-chart-bar me-1"></i>
+                        Bar Chart 
+                 </div>
+               
+                 <!-- card body -->
+                 <div class="card-body">
+                   <div id="columnchart_material" style="width: 500px; height: 400px;"></div>  
+                   <!-- <canvas id="myBarChart" width="100%" height="40"></canvas>-->
+                 </div>
+ 
+               </div>
+ 
+             </div>
+ 
+           </div> 
+ 
           <div class="card mb-4">
             <div class="card-header">
               <i class="fas fa-table me-1"></i>
@@ -275,7 +279,7 @@ echo "<input type='hidden' id= 'sales' value = '$sales' >";
   <script src="assets/demo/chart-bar-demo.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
   <script src="js/datatables-simple-demo.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.js"></script>
+  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"></script>
@@ -338,7 +342,69 @@ echo "<input type='hidden' id= 'sales' value = '$sales' >";
 
 
     };
-</script>
+</script> -->
+
+
+
+
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+
+ <!-- Bar chart -->
+ <script type="text/javascript">
+      google.charts.load('current', {'packages':['bar']});
+      google.charts.setOnLoadCallback(drawChart);
+
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+          ['Year', 'Sales', 'Expenses', 'Profit'],
+          ['2019', 1170, 460, 250],
+          ['2020', 660, 1120, 300],
+          ['2021', 1030, 540, 350]
+        ]);
+
+        var options = {
+          chart: {
+            title: 'Performance',
+            subtitle: 'Sales, Expenses, and Profit: 2019-2021',
+          }
+        };
+
+        var chart = new google.charts.Bar(document.getElementById('columnchart_material'));
+
+        chart.draw(data, google.charts.Bar.convertOptions(options));
+      }
+    </script>
+
+
+
+
+
+
+ <!-- Area chart-->
+ <script type="text/javascript">
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChart);
+
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+          ['Year', 'Sales', 'Expenses'],
+          ['2019',  1170,      460],
+          ['2020',  660,       1120],
+          ['2021',  1030,      540]
+        ]);
+
+        var options = {
+          title: 'Performance',
+          hAxis: {title: 'Year',  titleTextStyle: {color: '#333'}},
+          vAxis: {minValue: 0}
+        };
+
+        var chart = new google.visualization.AreaChart(document.getElementById('chart_div'));
+        chart.draw(data, options);
+      }
+    </script>
+
 
   <!-- Optional JavaScript; choose one of the two! -->
 
