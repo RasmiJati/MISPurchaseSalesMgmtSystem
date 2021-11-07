@@ -428,7 +428,7 @@
 
         var options = {
           chart: {
-            title: 'Customers Address',
+            title: 'Number of customers in the address',
           }
         };
 

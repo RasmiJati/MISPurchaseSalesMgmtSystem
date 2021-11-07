@@ -123,9 +123,9 @@
       Profit
     </a>
     <div class="sb-sidenav-menu-heading">Report</div>
-              <a class="nav-link" href="charts.html">
+              <a class="nav-link" href="purchase.php">
                 <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
-                Daily
+                Today
               </a>
               <a class="nav-link" href="tables.html">
                 <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
