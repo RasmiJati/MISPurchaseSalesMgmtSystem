@@ -194,50 +194,34 @@
               Purchase Data
             </div>
             <div class="card-body">
-              <table id="datatablesSimple">
+            <table id="datatablesSimple">
                 <thead>
                   <tr>
-                    <th scope="col">S.No.</th>
+                      <th scope = "col" > Id</th>
                     <th scope="col">Date</th>
                     <th scope="col">Name</th>
-                    <th scope="col">Rate</th>
                     <th scope="col">Quantity</th>
-                    <th scope="col">Amount</th>
-                    <th scope="col">VAT(%)</th>
-                    <th scope="col">Discount(%)</th>
-                    <th scope="col">Total Amount</th>
-                    <th scope="col">Company</th>
+                    <th scope="col">Expenses</th>
                 </tr>
 
                 </thead>
                 
                 <tbody>
                   <?php
-                  // include "inc/db_connects.php";
-                  $run = mysqli_query($con,"select *from purchase order by Date desc");
+                  $run = mysqli_query($con, "SELECT  ProductId , date_format(Date,'%W'), Name, sum(Quantity), sum(TotalAmount) from purchase group by  date_format(Date,'%W') order by date_format(Date,'%W')");
                   while($row = mysqli_fetch_array($run))
                   {
-                      $showid = $row[0];
+                      $showPid = $row[0];
                       $showdate = $row[1];
                       $showname = $row[2];
-                      $showrate = $row[3];
-                      $showqty = $row[4];
-                      $showamt = $row[5];
-                      $showvat = $row[6];
-                      $showdis = $row[7];
-                      $showtotal = $row[8];
-                      $showcompany = $row[9];
+                      $showqty = $row[3];
+                      $showamt = $row[4];
                       echo "<tr align = 'center'>
-                              <td>$showid</td>
+                              <td>$showPid</td>
                               <td>$showdate</td>
                               <td>$showname</td>
-                              <td>$showrate</td>
                               <td>$showqty</td>
                               <td>$showamt</td>
-                              <td>$showvat</td>
-                              <td>$showdis</td>
-                              <td>$showtotal</td>
-                              <td>$showcompany</td>
                             </tr>";
                   }
               ?>  

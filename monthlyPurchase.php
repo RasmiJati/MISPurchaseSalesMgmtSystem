@@ -149,7 +149,7 @@
     <div id="layoutSidenav_content">
       <main>
         <div class="container-fluid px-4">
-          <h1 class="mt-4">Yearly Purchase Report</h1>
+          <h1 class="mt-4">Monthly Purchase Report</h1>
           <ol class="breadcrumb mb-4">
             
           </ol>
@@ -208,7 +208,7 @@
                 
                 <tbody>
                   <?php
-                  $run = mysqli_query($con, "SELECT  ProductId , year(Date), Name, sum(Quantity), sum(TotalAmount) from purchase group by ProductID, year(Date) order by ProductID, year(Date)");
+                  $run = mysqli_query($con, "SELECT  ProductId , date_format(Date,'%M,%Y'), Name, sum(Quantity), sum(TotalAmount) from purchase group by  date_format(Date,'%M,%Y') order by  month(Date)");
                   while($row = mysqli_fetch_array($run))
                   {
                       $showPid = $row[0];
