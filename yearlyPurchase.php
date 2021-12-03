@@ -135,7 +135,7 @@
                 <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
                 Monthly
               </a>
-              <a class="nav-link" href="yearlyPurchase.php">
+              <a class="nav-link" href="yearlyPurchase.html">
                 <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
                 Yearly
               </a>
@@ -197,16 +197,11 @@
               <table id="datatablesSimple">
                 <thead>
                   <tr>
-                    <th scope="col">S.No.</th>
+                      <th scope = "col" > Id</th>
                     <th scope="col">Date</th>
                     <th scope="col">Name</th>
-                    <th scope="col">Rate</th>
                     <th scope="col">Quantity</th>
-                    <th scope="col">Amount</th>
-                    <th scope="col">VAT(%)</th>
-                    <th scope="col">Discount(%)</th>
                     <th scope="col">Total Amount</th>
-                    <th scope="col">Company</th>
                 </tr>
 
                 </thead>
@@ -214,30 +209,21 @@
                 <tbody>
                   <?php
                   // include "inc/db_connects.php";
-                  $run = mysqli_query($con,"select *from purchase order by Date desc");
+                //   $run = mysqli_query($con,"select *from purchase order by Date desc");
+                  $run = mysqli_query($con, "SELECT  ProductId , year(Date), Name, count(Quantity), sum(TotalAmount) from purchase group by ProductID");
                   while($row = mysqli_fetch_array($run))
                   {
-                      $showid = $row[0];
-                      $showdate = $row[1];
-                      $showname = $row[2];
-                      $showrate = $row[3];
-                      $showqty = $row[4];
-                      $showamt = $row[5];
-                      $showvat = $row[6];
-                      $showdis = $row[7];
-                      $showtotal = $row[8];
-                      $showcompany = $row[9];
+                      $showdate = $row[0];
+                      $showname = $row[1];
+                      $showqty = $row[2];
+                      $showamt = $row[3];
+                      $showPid = $row[4];
                       echo "<tr align = 'center'>
-                              <td>$showid</td>
                               <td>$showdate</td>
                               <td>$showname</td>
-                              <td>$showrate</td>
                               <td>$showqty</td>
                               <td>$showamt</td>
-                              <td>$showvat</td>
-                              <td>$showdis</td>
-                              <td>$showtotal</td>
-                              <td>$showcompany</td>
+                              <td>$showPid</td>
                             </tr>";
                   }
               ?>  
@@ -284,12 +270,13 @@
 
       function drawChart() {
         var data = google.visualization.arrayToDataTable([
-          ['Name', 'Quantity'],
+          ['Date', 'Quantity'],
           <?php
-            $query = "Select Name, Quantity from purchase group by Name";
+            $query = "select date_format(Date,'%M'),sum(Quantity)
+      from purchase group by year(Date) order by year(Date)";
           $result = mysqli_query($con, $query);      
             while($row = mysqli_fetch_array($result)){
-              echo "['".$row["Name"]."', ".$row["Quantity"],"],";
+              echo "['".$row["Date"]."', ".$row["Quantity"],"],";
             }
           ?>
         ]);
