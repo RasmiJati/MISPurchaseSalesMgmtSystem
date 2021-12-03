@@ -1,6 +1,3 @@
-<?php
-  include "inc/db_connects.php";
-?>
 <!doctype html>
 <html lang="en">
 
@@ -12,19 +9,25 @@
   <!-- Bootstrap CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
-    <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
-    <link href="css/style.css" rel="stylesheet" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
+  <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
+  <link href="css/style.css" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js"
+    crossorigin="anonymous"></script>
+
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.css" rel="stylesheet">
   <title>Purchase and Sales Mgmt System</title>
   <style>
-    th{
+    th {
       border: 2px solid #e6e6e6;
       text-align: center;
     }
-    tr{
+
+    tr {
       border: 2px solid #e6e6e6;
     }
-    td{
+
+    td {
       border: 2px solid #e6e6e6;
     }
   </style>
@@ -46,12 +49,12 @@
         <button class="btn btn-primary" id="btnNavbarSearch" type="button"><i class="fas fa-search"></i></button>
       </div>
     </form>
-
     <div class="navbar-nav">
       <div class="nav-item text-nowrap">
-          <a class="nav-link px-3" href="login.html">Log out</a>
+        <a class="nav-link px-3" href="login.html">Log out</a>
       </div>
-  </div>
+    </div>
+
 
     <!-- Navbar-->
     <!-- <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
@@ -83,12 +86,12 @@
               Dashboard
             </a>
             <div class="sb-sidenav-menu-heading">Interface</div>
-            
+
             <!-- <a class="nav-link collapsed" href="Product.php" data-bs-toggle="collapse" data-bs-target="#collapseLayouts"
               aria-expanded="false" aria-controls="collapseLayouts">
               <div class="sb-nav-link-icon"><i class="fab fa-product-hunt"></i></div>
               Product
-               <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div> 
+              <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div> 
             </a> -->
             <!-- <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
               <nav class="sb-sidenav-menu-nested nav">
@@ -98,50 +101,48 @@
             </div> -->
             <a class="nav-link collapsed" href="Purchase.php" data-bs-toggle="collapse" data-bs-target="#collapsePages"
               aria-expanded="false" aria-controls="collapsePages">
-              <div class="sb-nav-link-icon"><i class="fas fa-truck-loading"></i></div>  
+              <div class="sb-nav-link-icon"><i class="fas fa-truck-loading"></i></div>
               Purchase
             </a>
 
             <a class="nav-link collapsed" href="Sales.php" data-bs-toggle="collapse" data-bs-target="#collapsePages"
-            aria-expanded="false" aria-controls="collapsePages">
-            <div class="sb-nav-link-icon"><i class="fas fa-shopping-bag"></i></div>  
-            Sales
-          </a>
-          <a class="nav-link collapsed" href="Company.php" data-bs-toggle="collapse" data-bs-target="#collapsePages"
-          aria-expanded="false" aria-controls="collapsePages">
-          <div class="sb-nav-link-icon"><i class="fas fa-warehouse"></i></div>  
-         Company
-        </a>
-        <a class="nav-link collapsed" href="Customer.php" data-bs-toggle="collapse" data-bs-target="#collapsePages"
-        aria-expanded="false" aria-controls="collapsePages">
-        <div class="sb-nav-link-icon"><i class="fas fa-user-friends"></i></div>  
-        Customer
-      </a>
-      <a class="nav-link collapsed" href="Profit.php" data-bs-toggle="collapse" data-bs-target="#collapsePages"
-      aria-expanded="false" aria-controls="collapsePages">
-      <div class="sb-nav-link-icon"><i class="fas fa-chart-line"></i></div>  
-      Profit
-    </a>
-    <div class="sb-sidenav-menu-heading"> Purchase Report</div>
-              <a class="nav-link" href="dailyPurchase.php">
+              aria-expanded="false" aria-controls="collapsePages">
+              <div class="sb-nav-link-icon"><i class="fas fa-shopping-bag"></i></div>
+              Sales
+            </a>
+            <a class="nav-link collapsed" href="Company.php" data-bs-toggle="collapse" data-bs-target="#collapsePages"
+              aria-expanded="false" aria-controls="collapsePages">
+              <div class="sb-nav-link-icon"><i class="fas fa-warehouse"></i></div>
+              Company
+            </a>
+            <a class="nav-link collapsed" href="Customer.php" data-bs-toggle="collapse" data-bs-target="#collapsePages"
+              aria-expanded="false" aria-controls="collapsePages">
+              <div class="sb-nav-link-icon"><i class="fas fa-user-friends"></i></div>
+              Customer
+            </a>
+            <a class="nav-link collapsed" href="Profit.php" data-bs-toggle="collapse" data-bs-target="#collapsePages"
+              aria-expanded="false" aria-controls="collapsePages">
+              <div class="sb-nav-link-icon"><i class="fas fa-chart-line"></i></div>
+              Profit
+            </a>
+            <div class="sb-sidenav-menu-heading">Sales Report</div>
+              <a class="nav-link" href="dailySales.php">
                 <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
                 Today
               </a>
-              <a class="nav-link" href="Purchase.php">
+              <a class="nav-link" href="Sales.php">
                 <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
                 Weekly
               </a>
-              <a class="nav-link" href="monthlyPurchase.php">
+              <a class="nav-link" href="monthlySales.php">
                 <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
                 Monthly
               </a>
-              <a class="nav-link" href="yearlyPurchase.php">
+              <a class="nav-link" href="yearlySales.php">
                 <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
                 Yearly
               </a>
           </div>
-        </div>
-       
       </nav>
     </div>
 
@@ -149,66 +150,94 @@
     <div id="layoutSidenav_content">
       <main>
         <div class="container-fluid px-4">
-          <h1 class="mt-4">Weekly Purchase Report</h1>
+          <h1 class="mt-4">Yearly Sales Report</h1>
           <ol class="breadcrumb mb-4">
-            
           </ol>
-        
 
 
 
 
-           <div class="row">
-                    <div class="col-xl-6">
-                        <div class="card mb-4">
-                            <div class="card-header">
-                                <i class="fas fa-chart-area me-1"></i>
-                                Area Chart 
-                            </div>
-                            <div class="card-body"><canvas id="myAreaChart" width="100%" height="40"></canvas></div>
-                        </div>
-                    </div>
-                    <div class="col-xl-6">
+
+          <div class="row">
+            <div class="col-xl-6">
               <div class="card mb-4">
-
-                <!-- card header bar -->
                 <div class="card-header">
-                  <i class="fas fa-chart-bar me-1"></i>
-                       Bar Chart 
+                  <i class="fas fa-chart-area me-1"></i>
+                  Area Chart
                 </div>
-              
-                <!-- card body bar -->
-                <div class="card-body">
-                  <div id="columnchart_material" style="width: 600px; height: 400px;"></div>  
-                
-                </div>
-
+                <div class="card-body"><canvas id="myAreaChart" width="100%" height="40"></canvas></div>
               </div>
-
             </div>
 
-                </div> 
+
+            <div class="col-xl-6">
+              <div class="card mb-4">
+                <div class="card-header">
+                  <i class="fas fa-chart-bar me-1"></i>
+                  Bar Chart
+                </div>
+
+
+
+
+                <?php
+
+include("inc/db_connects.php");
+
+$query = "select Name,Quantity from  sales";
+$result = mysqli_query($con,$query);
+
+if(mysqli_num_rows($result) >= 1) {
+    while ($row = mysqli_fetch_assoc($result)) {
+
+        $name = $row['Name'];
+        $qty = $row['Quantity'];
+        
+    }
+}
+    else
+    {
+    echo "somthing went wrong";
+
+    }
+?>
+
+
+
+
+                <div class="card-body"><canvas id="myBarChart" width="100%" height="40"></canvas>
+                  <?php
+
+                                echo "<input type='hidden' id= 'name' value = '$name' >";
+                                echo "<input type='hidden' id= 'qty' value = '$qty' >";
+                               
+
+                            ?>
+                </div>
+              </div>
+            </div>
+          </div>
           <div class="card mb-4">
             <div class="card-header">
               <i class="fas fa-table me-1"></i>
-              Purchase Data
+              Sales Data
             </div>
             <div class="card-body">
             <table id="datatablesSimple">
                 <thead>
                   <tr>
                       <th scope = "col" > Id</th>
-                    <th scope="col">Date</th>
+                    <th scope="col">Year</th>
                     <th scope="col">Name</th>
-                    <th scope="col">Purchase</th>
-                    <th scope="col">Expenses</th>
+                    <th scope="col">Sales</th>
+                    <th scope="col">Income</th>
                 </tr>
 
                 </thead>
                 
                 <tbody>
                   <?php
-                  $run = mysqli_query($con, "SELECT  ProductId , date_format(Date,'%W'), Name, sum(Quantity), round(sum(TotalAmount),0) from purchase group by  date_format(Date,'%W') order by date_format(Date,'%W')");
+                $run = mysqli_query($con, "SELECT  ProductId , year(Date), Name, sum(Quantity), round(sum(TotalAmount),0) from sales group by ProductID, year(Date) order by ProductID, year(Date)");
                   while($row = mysqli_fetch_array($run))
                   {
                       $showPid = $row[0];
@@ -231,13 +260,13 @@
           </div>
         </div>
       </main>
-       <footer class="py-4 bg-light mt-auto">
-            <div class="container-fluid px-4">
-                <div class="d-flex align-items-center justify-content-between small">
-                    <div class="text-muted">Copyright &copy; Rasmi Jati</div>
-                </div>
-            </div>
-        </footer> 
+      <footer class="py-4 bg-light mt-auto">
+        <div class="container-fluid px-4">
+          <div class="d-flex align-items-center justify-content-between small">
+            <div class="text-muted">Copyright &copy; Rasmi Jati</div>
+          </div>
+        </div>
+      </footer>
     </div>
   </div>
   </main>
@@ -252,43 +281,82 @@
   <script src="https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.min.js"
     integrity="sha384-uO3SXW5IuS1ZpFPKugNNWqTZRRglnUJK6UAZ/gxOX80nxEkN9NcGZTftn6RzhGWE"
     crossorigin="anonymous"></script>
- 
-  <script src="dashboard.js"></script> 
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
-        <script src="assets/demo/chart-area-demo.js"></script>
-        <script src="assets/demo/chart-bar-demo.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
-        <script src="js/datatables-simple-demo.js"></script>
+
+  <script src="dashboard.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
+  <script src="assets/demo/chart-area-demo.js"></script>
+  <script src="assets/demo/chart-bar-demo.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
+  <script src="js/datatables-simple-demo.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"></script>
 
 
-        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-    <script type="text/javascript">
-      google.charts.load('current', {'packages':['bar']});
-      google.charts.setOnLoadCallback(drawChart);
+  <script>
+    var name = document.getElementById("name").value;
+    var qty = document.getElementById("qty").value;
+    
+    window.onload = function () {
+      var randomScalingFactor = function () {
+        return Math.round(Math.random() * 100);
+      };
+      var config = {
+        type: 'bar',
+        data: {
+          borderColor: "#fffff",
+          datasets: [{
+            data: [
+              name,
+              qty
+            ],
+            borderColor: "#fff",
+            borderWidth: "3",
+            hoverBorderColor: "#000",
 
-      function drawChart() {
-        var data = google.visualization.arrayToDataTable([
-          ['Name', 'Quantity'],
-          <?php
-            $query = "Select Name, Quantity from purchase group by Name";
-          $result = mysqli_query($con, $query);      
-            while($row = mysqli_fetch_array($result)){
-              echo "['".$row["Name"]."', ".$row["Quantity"],"],";
-            }
-          ?>
-        ]);
+            label: 'Sales Report',
 
-        var options = {
-          chart: {
-            title: 'Total Purchase',
-          }
-        };
+            backgroundColor: [
+              "#0190ff",
+              "#56d798",
+              "#ff8397",
+              "#6970d5",
+              "#f312cb",
+              "#ff0060",
+              "#ffe400"
 
-        var chart = new google.charts.Bar(document.getElementById('columnchart_material'));
+            ],
+            hoverBackgroundColor: [
+              "#f38b4a",
+              "#56d798",
+              "#ff8397",
+              "#6970d5",
+              "#ffe400"
+            ]
+          }],
 
-        chart.draw(data, google.charts.Bar.convertOptions(options));
-      }
-    </script>
+          labels: [
+            'Coffee Table',
+            'Dinning Table',
+            'Work Table',
+            'Side Table',
+            'Conference Table'
+          ]
+        },
+
+        options: {
+          responsive: true
+
+        }
+      };
+      var ctx = document.getElementById('myBarChart').getContext('2d');
+      window.myPie = new Chart(ctx, config);
+
+
+    };
+  </script>
 
 
 

@@ -125,20 +125,20 @@
               <div class="sb-nav-link-icon"><i class="fas fa-chart-line"></i></div>
               Profit
             </a>
-            <div class="sb-sidenav-menu-heading">Report</div>
-              <a class="nav-link" href="Sales.php">
+            <div class="sb-sidenav-menu-heading">Sales Report</div>
+              <a class="nav-link" href="dailySales.php">
                 <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
                 Today
               </a>
-              <a class="nav-link" href="tables.html">
+              <a class="nav-link" href="Sales.php">
                 <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
                 Weekly
               </a>
-              <a class="nav-link" href="charts.html">
+              <a class="nav-link" href="monthlySales.php">
                 <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
                 Monthly
               </a>
-              <a class="nav-link" href="tables.html">
+              <a class="nav-link" href="yearlySales.php">
                 <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
                 Yearly
               </a>

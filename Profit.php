@@ -1,3 +1,6 @@
+<?php
+  include "inc/db_connects.php";
+?>
 <!doctype html>
 <html lang="en">
 
@@ -13,6 +16,18 @@
     <link href="css/style.css" rel="stylesheet" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
   <title>Purchase and Sales Mgmt System</title>
+  <style>
+    th{
+      border: 2px solid #e6e6e6;
+      text-align: center;
+    }
+    tr{
+      border: 2px solid #e6e6e6;
+    }
+    td{
+      border: 2px solid #e6e6e6;
+    }
+  </style>
 </head>
 
 <body class="sb-nav-fixed">
@@ -69,11 +84,11 @@
             </a>
             <div class="sb-sidenav-menu-heading">Interface</div>
             
-            <!-- <a class="nav-link collapsed" href="Product.html" data-bs-toggle="collapse" data-bs-target="#collapseLayouts"
+            <!-- <a class="nav-link collapsed" href="Product.php" data-bs-toggle="collapse" data-bs-target="#collapseLayouts"
               aria-expanded="false" aria-controls="collapseLayouts">
               <div class="sb-nav-link-icon"><i class="fab fa-product-hunt"></i></div>
               Product
-            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+               <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div> 
             </a> -->
             <!-- <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
               <nav class="sb-sidenav-menu-nested nav">
@@ -107,30 +122,26 @@
       <div class="sb-nav-link-icon"><i class="fas fa-chart-line"></i></div>  
       Profit
     </a>
-
-            <div class="sb-sidenav-menu-heading">Report</div>
-            <a class="nav-link" href="Profit.php">
+    <div class="sb-sidenav-menu-heading"> Report</div>
+              <a class="nav-link" href="dailyProfit.php">
                 <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
                 Today
               </a>
-              <a class="nav-link" href="tables.html">
+              <a class="nav-link" href="Profit.php">
                 <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
                 Weekly
               </a>
-              <a class="nav-link" href="charts.html">
+              <a class="nav-link" href="monthlyProfit.php">
                 <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
                 Monthly
               </a>
-              <a class="nav-link" href="tables.html">
+              <a class="nav-link" href="yearlyProfit.php">
                 <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
                 Yearly
               </a>
           </div>
         </div>
-        <!-- <div class="sb-sidenav-footer">
-          <div class="small">Logged in as:</div>
-          Rasmi
-        </div> -->
+       
       </nav>
     </div>
 
@@ -138,8 +149,9 @@
     <div id="layoutSidenav_content">
       <main>
         <div class="container-fluid px-4">
-          <h1 class="mt-4">Profit Report</h1>
+          <h1 class="mt-4">Weekly Profit Report</h1>
           <ol class="breadcrumb mb-4">
+            
           </ol>
         
 
@@ -157,14 +169,24 @@
                         </div>
                     </div>
                     <div class="col-xl-6">
-                        <div class="card mb-4">
-                            <div class="card-header">
-                                <i class="fas fa-chart-bar me-1"></i>
-                                Bar Chart 
-                            </div>
-                            <div class="card-body"><canvas id="myBarChart" width="100%" height="40"></canvas></div>
-                        </div>
-                    </div>
+              <div class="card mb-4">
+
+                <!-- card header bar -->
+                <div class="card-header">
+                  <i class="fas fa-chart-bar me-1"></i>
+                       Bar Chart 
+                </div>
+              
+                <!-- card body bar -->
+                <div class="card-body">
+                  <div id="columnchart_material" style="width: 600px; height: 400px;"></div>  
+                
+                </div>
+
+              </div>
+
+            </div>
+
                 </div> 
           <div class="card mb-4">
             <div class="card-header">
@@ -172,68 +194,38 @@
               Profit Data
             </div>
             <div class="card-body">
-              <table id="datatablesSimple">
+            <table id="datatablesSimple">
                 <thead>
                   <tr>
-                    <th scope="col">Id</th>
+                      <th scope = "col" > Id</th>
                     <th scope="col">Date</th>
                     <th scope="col">Name</th>
-                    <th scope="col">Description</th>
-                    <th scope="col">Cost Price</th>
-                    <th scope="col">Selling Price</th>
-                    <th scope="col">Purchase Unit</th>
-                    <th scope="col">Sales Unit</th>
-                    <th scope="col">Purchase Amount</th>
-                    <th scope="col">Sales Amount</th>
-                    <th scope="col">Profit</th>
+                    <th scope="col">Purchase</th>
+                    <th scope="col">Expenses</th>
                 </tr>
-
 
                 </thead>
                 
                 <tbody>
-                  <tr>
-                    <td>Tiger Nixon</td>
-                    <td>System Architect</td>
-                    <td>Edinburgh</td>
-                    <td>61</td>
-                    <td>2011/04/25</td>
-                    <td>$320,800</td>
-                  </tr>
-                  <tr>
-                    <td>Garrett Winters</td>
-                    <td>Accountant</td>
-                    <td>Tokyo</td>
-                    <td>63</td>
-                    <td>2011/07/25</td>
-                    <td>$170,750</td>
-                  </tr>
-                  <tr>
-                    <td>Ashton Cox</td>
-                    <td>Junior Technical Author</td>
-                    <td>San Francisco</td>
-                    <td>66</td>
-                    <td>2009/01/12</td>
-                    <td>$86,000</td>
-                  </tr>
-                  <tr>
-                    <td>Cedric Kelly</td>
-                    <td>Senior Javascript Developer</td>
-                    <td>Edinburgh</td>
-                    <td>22</td>
-                    <td>2012/03/29</td>
-                    <td>$433,060</td>
-                  </tr>
-                  <tr>
-                    <td>Airi Satou</td>
-                    <td>Accountant</td>
-                    <td>Tokyo</td>
-                    <td>33</td>
-                    <td>2008/11/28</td>
-                    <td>$162,700</td>
-                  </tr>
-                           
-                   </tbody>
+                  <?php
+                  $run = mysqli_query($con, "SELECT  ProductId , date_format(Date,'%W'), Name, sum(Quantity), round(sum(TotalAmount),0) from purchase group by  date_format(Date,'%W') order by date_format(Date,'%W')");
+                  while($row = mysqli_fetch_array($run))
+                  {
+                      $showPid = $row[0];
+                      $showdate = $row[1];
+                      $showname = $row[2];
+                      $showqty = $row[3];
+                      $showamt = $row[4];
+                      echo "<tr align = 'center'>
+                              <td>$showPid</td>
+                              <td>$showdate</td>
+                              <td>$showname</td>
+                              <td>$showqty</td>
+                              <td>$showamt</td>
+                            </tr>";
+                  }
+              ?>  
+                </tbody>
               </table>
             </div>
           </div>
@@ -267,6 +259,37 @@
         <script src="assets/demo/chart-bar-demo.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
         <script src="js/datatables-simple-demo.js"></script>
+
+
+        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+      google.charts.load('current', {'packages':['bar']});
+      google.charts.setOnLoadCallback(drawChart);
+
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+          ['Name', 'Quantity'],
+          <?php
+            $query = "Select Name, Quantity from purchase group by Name";
+          $result = mysqli_query($con, $query);      
+            while($row = mysqli_fetch_array($result)){
+              echo "['".$row["Name"]."', ".$row["Quantity"],"],";
+            }
+          ?>
+        ]);
+
+        var options = {
+          chart: {
+            title: 'Total Purchase',
+          }
+        };
+
+        var chart = new google.charts.Bar(document.getElementById('columnchart_material'));
+
+        chart.draw(data, google.charts.Bar.convertOptions(options));
+      }
+    </script>
+
 
 
   <!-- Optional JavaScript; choose one of the two! -->

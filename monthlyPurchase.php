@@ -122,7 +122,7 @@
       <div class="sb-nav-link-icon"><i class="fas fa-chart-line"></i></div>  
       Profit
     </a>
-    <div class="sb-sidenav-menu-heading">Report</div>
+    <div class="sb-sidenav-menu-heading">Purchase Report</div>
               <a class="nav-link" href="dailyPurchase.php">
                 <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
                 Today
@@ -135,7 +135,7 @@
                 <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
                 Monthly
               </a>
-              <a class="nav-link" href="yearlyPurchase.html">
+              <a class="nav-link" href="yearlyPurchase.php">
                 <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
                 Yearly
               </a>
@@ -200,7 +200,7 @@
                       <th scope = "col" > Id</th>
                     <th scope="col">Date</th>
                     <th scope="col">Name</th>
-                    <th scope="col">Quantity</th>
+                    <th scope="col">Purchase</th>
                     <th scope="col">Expenses</th>
                 </tr>
 
@@ -208,7 +208,7 @@
                 
                 <tbody>
                   <?php
-                  $run = mysqli_query($con, "SELECT  ProductId , date_format(Date,'%M,%Y'), Name, sum(Quantity), sum(TotalAmount) from purchase group by  date_format(Date,'%M,%Y') order by  month(Date)");
+                  $run = mysqli_query($con, "SELECT  ProductId , date_format(Date,'%M,%Y'), Name, sum(Quantity), round(sum(TotalAmount),0) from purchase group by  date_format(Date,'%M,%Y') order by  month(Date)");
                   while($row = mysqli_fetch_array($run))
                   {
                       $showPid = $row[0];
