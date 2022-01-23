@@ -1,5 +1,22 @@
 <?php
   include "inc/db_connects.php";
+  $run = mysqli_query($con, "SELECT  ProductId , year(Date), Name, sum(Quantity), round(sum(TotalAmount),0) from purchase group by ProductID, year(Date) order by ProductID, year(Date)");
+                  while($row = mysqli_fetch_array($run))
+                  {
+                      $showPid = $row[0];
+                      $showdate = $row[1];
+                      $showname = $row[2];
+                      $showqty = $row[3];
+                      $showamt = $row[4];
+                      echo "<tr align = 'center'>
+                              <td>$showPid</td>
+                              <td>$showdate</td>
+                              <td>$showname</td>
+                              <td>$showqty</td>
+                              <td>$showamt</td>
+                            </tr>";
+                  }
+
 ?>
 <!doctype html>
 <html lang="en">
@@ -148,27 +165,24 @@
 
     <div id="layoutSidenav_content">
       <main>
-        <div class="container-fluid px-4">
-          <h1 class="mt-4">Yearly Purchase Report</h1>
-          <ol class="breadcrumb mb-4">
-            
-          </ol>
-        
+       
+      <div class="container-fluid px-4">
+        <h1 class="mt-4">Yearly Purchase Report</h1>
+        <ol class="breadcrumb mb-4">
+      
+        </ol>
+        <div class="row">
+          <div class="col-xl-6">
+            <div class="card mb-4">
+              <div class="card-header">
+                <i class="fas fa-chart-area me-1"></i>
+                    Area Chart 
+              </div>
+              <div class="card-body"><canvas id="myAreaChart" width="100%" height="40"></canvas></div>
+            </div>
+          </div>
 
-
-
-
-           <div class="row">
-                    <div class="col-xl-6">
-                        <div class="card mb-4">
-                            <div class="card-header">
-                                <i class="fas fa-chart-area me-1"></i>
-                                Area Chart 
-                            </div>
-                            <div class="card-body"><canvas id="myAreaChart" width="100%" height="40"></canvas></div>
-                        </div>
-                    </div>
-                    <div class="col-xl-6">
+          <div class="col-xl-6">
               <div class="card mb-4">
 
                 <!-- card header bar -->
@@ -231,6 +245,7 @@
           </div>
         </div>
       </main>
+
        <footer class="py-4 bg-light mt-auto">
             <div class="container-fluid px-4">
                 <div class="d-flex align-items-center justify-content-between small">
@@ -267,24 +282,46 @@
       google.charts.setOnLoadCallback(drawChart);
 
       function drawChart() {
-        var data = google.visualization.arrayToDataTable([
-          ['Date', 'Quantity'],
-          <?php
-            $query = "select year(date),sum(Quantity) from purchase";
+      //   var data = google.visualization.arrayToDataTable([
+      //     ['Date', 'Quantity'],
+      //     <?php
+      //       $query = "select year(date),sum(Quantity) from purchase";
+      // // $run = mysqli_query($con, "SELECT  year(Date), Name, sum(Quantity), sum(TotalAmount) from purchase group by ProductID, year(Date) order by ProductID, year(Date)");
+
+      //     $result = mysqli_query($con, $query);      
+      //       while($row = mysqli_fetch_array($result)){
+      //         echo "['".$row["Date"]."', ".$row["Quantity"],"],";
+      //       }
+      //     ?>
+      //   ]);
+
+      //   var options = {
+      //     chart: {
+      //       title: 'Total Purchase',
+      //     }
+      //   };
+
+      var data = google.visualization.arrayToDataTable([
+        ['Year', 'Name', 'Quantity',{ role: 'annotation' } ],
+        php
+            $query = "select year(date),Name,sum(Quantity) from purchase";
       // $run = mysqli_query($con, "SELECT  year(Date), Name, sum(Quantity), sum(TotalAmount) from purchase group by ProductID, year(Date) order by ProductID, year(Date)");
 
           $result = mysqli_query($con, $query);      
             while($row = mysqli_fetch_array($result)){
-              echo "['".$row["Date"]."', ".$row["Quantity"],"],";
+              echo "['".$row["Date"]."', ".$row["Name"].", ".$row["Quantity"],"],";
             }
           ?>
-        ]);
+      
+      ]);
 
-        var options = {
-          chart: {
-            title: 'Total Purchase',
-          }
-        };
+      var options = {
+        width: 600,
+        height: 400,
+        legend: { position: 'top', maxLines: 3 },
+        bar: { groupWidth: '75%' },
+        isStacked: true
+      };
 
         var chart = new google.charts.Bar(document.getElementById('columnchart_material'));
 

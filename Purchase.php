@@ -176,7 +176,13 @@
                   <i class="fas fa-chart-bar me-1"></i>
                        Bar Chart 
                 </div>
-              
+              <?php
+              $run = mysqli_query($con, "SELECT Name, sum(Quantity),  group by Name order by Name");
+              $category = array();
+                              while($row = mysqli_fetch_assoc($run)){
+                                  $category[] = "['".$row['Name'] ."',".$row['Quantity']."]";
+                              }
+                              ?>
                 <!-- card body bar -->
                 <div class="card-body">
                   <div id="columnchart_material" style="width: 600px; height: 400px;"></div>  
@@ -245,53 +251,37 @@
   </div>
 
 
-  <script src="/docs/5.1/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ"
-    crossorigin="anonymous"></script>
-
-  <script src="https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.min.js"
-    integrity="sha384-uO3SXW5IuS1ZpFPKugNNWqTZRRglnUJK6UAZ/gxOX80nxEkN9NcGZTftn6RzhGWE"
-    crossorigin="anonymous"></script>
- 
-  <script src="dashboard.js"></script> 
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
-        <script src="assets/demo/chart-area-demo.js"></script>
-        <script src="assets/demo/chart-bar-demo.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
-        <script src="js/datatables-simple-demo.js"></script>
-
-
-        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript">
       google.charts.load('current', {'packages':['bar']});
-      google.charts.setOnLoadCallback(drawChart);
+      google.charts.setOnLoadCallback(drawStuff);
 
-      function drawChart() {
-        var data = google.visualization.arrayToDataTable([
-          ['Name', 'Quantity'],
-          <?php
-            $query = "Select Name, Quantity from purchase group by Name";
-          $result = mysqli_query($con, $query);      
-            while($row = mysqli_fetch_array($result)){
-              echo "['".$row["Name"]."', ".$row["Quantity"],"],";
-            }
-          ?>
+      function drawStuff() {
+        var data = new google.visualization.arrayToDataTable([
+          ['Opening Move', 'Percentage'],  
+            <?php
+             foreach($category as $category){
+               echo $category;
+             }
+            ?>
         ]);
 
         var options = {
-          chart: {
-            title: 'Total Purchase',
-          }
+          title: 'Chess opening moves',
+          width: 500,
+          legend: { position: 'none' },
+          chart: { title: 'Chess opening moves',
+                   subtitle: 'popularity by percentage' },
+          
+          
+          bar: { groupWidth: "90%" }
         };
 
         var chart = new google.charts.Bar(document.getElementById('columnchart_material'));
-
-        chart.draw(data, google.charts.Bar.convertOptions(options));
-      }
+        chart.draw(data, options);
+      };
     </script>
-
-
-
+  
   <!-- Optional JavaScript; choose one of the two! -->
 
   <!-- Option 1: Bootstrap Bundle with Popper -->
